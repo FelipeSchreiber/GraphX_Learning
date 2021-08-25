@@ -63,5 +63,16 @@ object SimpleGraphApp {
       "The ingredient " ++ t.srcAttr.name ++ " contains " ++ t.dstAttr.name
     foodNetwork.triplets.take(5).
       foreach(showTriplet _ andThen println _)
+    
+    def max(a: (VertexId, Int), b: (VertexId, Int)): (VertexId, Int) = 
+    {
+      if (a._2 > b._2) a else b
+    }  
+    val mostCommonIngredientId = foodNetwork.outDegrees.reduce(max)
+    val mostCommonIngredientName = foodNetwork.vertices.filter(_._1 == mostCommonIngredientId._1).collect()
+    println("Obtendo o ingrediente que contém o maior número de compostos: "+mostCommonIngredientName(0)._2.name)
+    val recipeWithMostIngredientsId = foodNetwork.inDegrees.reduce(max)
+    val recipeWithMostIngredientsName = foodNetwork.vertices.filter(_._1 == recipeWithMostIngredientsId._1).collect()
+    println("Obtendo o composto mais presente em ingredientes: "+recipeWithMostIngredientsName(0)._2.name)
   }
 }
