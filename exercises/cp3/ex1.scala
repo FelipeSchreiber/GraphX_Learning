@@ -5,10 +5,10 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark._
 import org.apache.spark.graphx._
 import scala.io.Source
-import org.graphstream.graph.{Graph => GraphStream}
-import org.graphstream.graph.implementations._
+// import org.graphstream.graph.{Graph => GraphStream}
+// import org.graphstream.graph.implementations._
 import org.jfree.chart.axis.ValueAxis
-import breeze.linalg._
+import breeze.linalg.DenseVector
 import breeze.plot._
 
 //A DEFINICAO DAS CLASSES PRECISAM ESTAR FORA DA DEFINICAO DO OBJETO
@@ -83,30 +83,7 @@ object SimpleGraphApp {
     val recipeWithMostIngredientsId = foodNetwork.inDegrees.reduce(max)
     val recipeWithMostIngredientsName = foodNetwork.vertices.filter(_._1 == recipeWithMostIngredientsId._1).collect()
     println("Obtendo o composto mais presente em ingredientes: "+recipeWithMostIngredientsName(0)._2.name)
-
-    // Create a SingleGraph class for GraphStream visualization
-    // graph.addAttribute("ui.stylesheet","url(file:.//style/stylesheet)")
-    // graph.addAttribute("ui.quality")
-    // graph.addAttribute("ui.antialias")
-
-    //plota o grafo em si
-    // Create a SingleGraph class for GraphStream visualization
-    val graph: SingleGraph = new SingleGraph("FoodNetwork")
-    graph.setStrict(false);
-    graph.setAutoCreate(true);
-    // Given the foodNetwork, load the graphX vertices into GraphStream
-    for ((id,_) <- foodNetwork.vertices.collect()) {
-      val node = graph.addNode(id.toString).asInstanceOf[SingleNode]
-    }
-    // Load the graphX edges into GraphStream edges
-    for (Edge(x,y,_) <- foodNetwork.edges.collect()) {
-      val edge = graph.addEdge(x.toString ++ y.toString,
-      x.toString, y.toString,true)
-      .asInstanceOf[AbstractEdge]
-    }
-    graph.display(false)
-    // println(graph)
-
+    
     //SHOW DEGREE DISTRIBUTION
     def degreeHistogram(net: Graph[FNNode, Int]): Array[(Int, Int)] =
       net.degrees.map(t => (t._2,t._1)).

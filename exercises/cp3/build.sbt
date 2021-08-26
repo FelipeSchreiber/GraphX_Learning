@@ -8,9 +8,7 @@ libraryDependencies ++= Seq(
   "org.scalanlp" %% "breeze-viz" % "2.0-RC3",
   "org.scalanlp" %% "breeze" % "2.0-RC3",
   "org.jfree" % "jcommon" % "1.0.24",
-  "org.jfree" % "jfreechart" % "1.5.3",
-  "org.graphstream" % "gs-core" % "2.0",
-  "network.aika" % "gs-ui-swing" % "2.0.1"
+  "org.jfree" % "jfreechart" % "1.5.3"
 )
 
 assemblyMergeStrategy in assembly := {
